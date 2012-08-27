@@ -1,0 +1,9 @@
+Package: nodependencies
+Title: Tools to make developing R code easier
+License: GPL-2
+Description: 
+Author: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
+Maintainer: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
+Version: 0.1
+Collate:
+    ''
