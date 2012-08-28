@@ -23,6 +23,11 @@
   Dependencies are installed into the package's bundle
   library.
 }
+\details{
+  Note that repository and pkgType options are temporarily
+  overridden, according to the user's options, and set back
+  to the
+}
 \examples{
 # From within the package root, run 'bundle' to instll the package, along with it's dependencies:
 bundle(system.file(package='rbundler', 'tests', 'no-dependencies'))

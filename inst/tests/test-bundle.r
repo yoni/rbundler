@@ -9,13 +9,11 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
             desc,
             {
 
-              options(repos=structure(c(CRAN="http://cran.us.r-project.org")))
-
               package <- as.package(pkg)
 
-              lib <- file.path(tempdir(), package$package)
+              lib <- file.path(tempdir(), sprintf("%s.Rbundle", package$package))
 
-              bundle(package$path, lib=lib)
+              bundle(package$path, lib=lib, repos=c("http://cran.us.r-project.org"))
 
               expect_true(file.exists(lib), sprintf("Bundler library [%s] was not created.", lib))
 
