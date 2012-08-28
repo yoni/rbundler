@@ -59,7 +59,7 @@ test_bundle(
             )
 
 test_that(
-          desc = "Bundling a package with an error returns overridden options to their previous stats.",
+          desc = "When bundling a package with an error, overridden options are restored to their previous state.",
           {
             repos = getOption('repos')
             pkgType = getOption('pkgType')
