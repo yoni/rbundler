@@ -2,8 +2,14 @@
 \name{rbundler}
 \alias{rbundler}
 \alias{rbundler-package}
-\title{rbundler}
+\title{A package dependency management utility.}
 \description{
-  rbundler
+  Rbundler is an R package dependency management utility.
+}
+\examples{
+example(bundle)
+}
+\author{
+  Yoni Ben-Meshulam \email{yoni.bmesh@gmail.com}
 }
 

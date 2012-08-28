@@ -35,6 +35,11 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
 
               }
 
+              # Note: we're checking that only the basename of the library is in libPaths, due to an issue with OS X
+              # having '/var' point to '/private/var'. R thinks it's using 'var', when in reality, .libPaths
+              # points to '/private/var'.
+              expect_match(basename(lib), basename(.libPaths()), all=FALSE, info=sprintf("Did not find [%s] in .libPaths().", lib))
+
               unlink(lib, recursive=TRUE)
 
             }
@@ -52,3 +57,17 @@ test_bundle(
             pkg = "simple-dependencies",
             expected_dependencies=c('PerformanceAnalytics')
             )
+
+test_that(
+          desc = "Bundling a package with an error returns overridden options to their previous stats.",
+          {
+            repos = getOption('repos')
+            pkgType = getOption('pkgType')
+
+            pkg = "non-existant-package"
+            expect_error(bundle(pkg, repos=c("non-existant-repo")))
+
+            expect_equal(getOption('repos'), repos)
+            expect_equal(getOption('pkgType'), pkgType)
+          }
+          )

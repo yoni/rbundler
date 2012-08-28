@@ -1,6 +1,7 @@
 #' Bundles a package's dependencies for development workflows.
 #'
-#' Dependencies are installed into the package's bundle library. 
+#' Dependencies are installed into the package's bundle library. The
+#' library is also added to this session's .libPaths.
 #'
 #' Note that repository and pkgType options are temporarily overridden,
 #' according to the user's options, and set back to the 
@@ -16,9 +17,16 @@
 #' @export
 #' @examples
 #' 
-#' # From within the package root, run 'bundle' to instll the package, along with it's dependencies:
-#' bundle(system.file(package='rbundler', 'tests', 'no-dependencies'))
-#' bundle(system.file(package='rbundler', 'tests', 'simple-dependencies'))
+#' bundle(
+#'    system.file(package='rbundler', 'tests', 'no-dependencies'),
+#'    lib=sprintf(file.path(tempdir(), 'rbundler_example_no_dependencies')),
+#'    repos=c("http://cran.us.r-project.org")
+#' )
+#' bundle(
+#'    system.file(package='rbundler', 'tests', 'simple-dependencies'),
+#'    lib=file.path(tempdir(), 'rbundler_example_simple_dependencies'),
+#'    repos=c("http://cran.us.r-project.org")
+#' )
 bundle <- function(pkg='.',
                    lib=file.path(pkg, '.Rbundle'),
                    repos = getOption("repos")
@@ -47,9 +55,7 @@ bundle <- function(pkg='.',
     install(pkg)
 
   }, finally = {
-
       reset_options_to_previous_values()
-
   })
 
 
