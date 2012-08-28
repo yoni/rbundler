@@ -55,7 +55,7 @@ bundle <- function(pkg='.',
     install(pkg)
 
   }, finally = {
-      reset_options_to_previous_values()
+    reset_options_to_previous_values()
   })
 
 
