@@ -1,5 +1,6 @@
 Package: nodependencies
-Title: Tools to make developing R code easier
+Title: A mock package for testing that a package with no dependencies
+       can be bundled. See test_bundle.r
 License: GPL-2
 Description: 
 Author: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
