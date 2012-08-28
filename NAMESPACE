@@ -1,3 +1,2 @@
 export(bundle)
-export(bundle_library)
 importFrom(devtools,install)

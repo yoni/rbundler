@@ -17,4 +17,3 @@ Suggests:
 Collate:
     'rbundler-package.r'
     'bundle.r'
-    'bundle-library.r'
