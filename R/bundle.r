@@ -4,6 +4,11 @@
 #' @param pkg package description, can be path or package name.
 #' @importFrom devtools install
 #' @export
+#' @examples
+#' 
+#' # From within the package root, run 'bundle' to instll the package, along with it's dependencies:
+#' bundle(system.file(package='rbundler', 'tests', 'no-dependencies'))
+#' bundle(system.file(package='rbundler', 'tests', 'simple-dependencies'))
 bundle <- function(pkg='.') {
 
   lib <- bundle_library(pkg)
