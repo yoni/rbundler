@@ -10,7 +10,7 @@ Description: Specify your dependencies in your project's root
     repeatable fashion, without requiring the manual maintenance of
     R package libraries.
 Depends:
-    devtools
+    devtools (>= 0.7.1)
 Suggests:
     testthat,
     roxygen2
