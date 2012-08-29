@@ -1,3 +1,8 @@
+rbundler 0.1.1
+--------------
+
+Update devtools dependency to 0.7.1 and R dependency to 2.15.1.
+
 rbundler 0.1
 --------------
 
@@ -9,4 +14,3 @@ bundle library.
 BUNDLE PATHS
 
 * `bundle` installs packages into `PROJECT_PATH/.Rbundle` by default.
-
