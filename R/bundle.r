@@ -1,4 +1,4 @@
-#' Bundles a package's dependencies for development workflows.
+#' Bundles a package and it's dependencies into a library.
 #'
 #' Dependencies are installed into the package's bundle library. The
 #' library is also added to this session's .libPaths.
