@@ -1,0 +1,12 @@
+rbundler 0.1
+--------------
+
+NEW FEATURES
+
+* The `bundle` function installs the package and all of it's dependencies into a
+bundle library.
+
+BUNDLE PATHS
+
+* `bundle` installs packages into `PROJECT_PATH/.Rbundle` by default.
+
