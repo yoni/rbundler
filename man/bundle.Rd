@@ -1,6 +1,6 @@
 \name{bundle}
 \alias{bundle}
-\title{Bundles a package's dependencies for development workflows.}
+\title{Bundles a package and it's dependencies into a library.}
 \usage{
   bundle(pkg = ".", lib = file.path(pkg, ".Rbundle"),
     repos = getOption("repos"))
