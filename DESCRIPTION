@@ -11,7 +11,7 @@ Description: Specify your dependencies in your project's root
     R package libraries.
 Depends:
     R (>= 2.15.1),
-    devtools (>= 0.7.1)
+    devtools (>= 0.7)
 Suggests:
     testthat,
     roxygen2

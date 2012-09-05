@@ -11,17 +11,26 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
 
               package <- as.package(pkg)
 
-              lib <- file.path(tempdir(), sprintf("%s.Rbundle", package$package))
+              lib <- file.path(
+                               tempdir(),
+                               sprintf("%s.%s.Rbundle", as.numeric(Sys.time()), package$package)
+                               )
 
               bundle(package$path, lib=lib, repos=c("http://cran.us.r-project.org"))
 
-              expect_true(file.exists(lib), sprintf("Bundler library [%s] was not created.", lib))
+              expect_true(
+                          file.exists(lib),
+                          sprintf("Bundler library [%s] was not created.", lib)
+                          )
 
               bundle_package_path <- file.path(lib, package$package)
 
               expect_true(
                           file.exists(bundle_package_path),
-                          sprintf("Package was not successfully installed into bundler library: [%s]", bundle_package_path)
+                          sprintf(
+                                  "Package was not successfully installed into bundler library: [%s]",
+                                  bundle_package_path
+                                  )
                           )
 
               for(dependency in expected_dependencies) {
@@ -30,7 +39,10 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
 
                 expect_true(
                             file.exists(bundle_dependency_path),
-                            sprintf("Dependency was not successfully installed into bundler library: [%s]", bundle_dependency_path)
+                            sprintf(
+                                    "Dependency was not successfully installed into bundler library: [%s]",
+                                    bundle_dependency_path
+                                    )
                             )
 
               }
