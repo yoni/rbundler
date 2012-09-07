@@ -33,12 +33,6 @@ bundle <- function(pkg='.',
                    ) {
 
   repositories <- getOption("repos")
-  pkgType <- getOption("pkgType")
-
-  reset_options_to_previous_values <- function() {
-    options(repos = repositories)
-    options(pkgType = pkgType)
-  }
 
   tryCatch({
 
@@ -46,16 +40,16 @@ bundle <- function(pkg='.',
     temp_repositories["CRAN"] <- repos
 
     options(repos = temp_repositories)
-    options(pkgType = 'both')
 
     dir.create(lib, recursive=TRUE, showWarnings = FALSE)
-    .libPaths(lib)
+ 
+    .libPaths(c(lib, .libPaths()))
 
     message("Bundling package ", pkg, " dependencies into library ", lib)
     install(pkg)
 
   }, finally = {
-    reset_options_to_previous_values()
+    options(repos = repositories)
   })
 
 

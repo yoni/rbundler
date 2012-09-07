@@ -74,12 +74,10 @@ test_that(
           desc = "When bundling a package with an error, overridden options are restored to their previous state.",
           {
             repos = getOption('repos')
-            pkgType = getOption('pkgType')
 
             pkg = "non-existant-package"
             expect_error(bundle(pkg, repos=c("non-existant-repo")))
 
             expect_equal(getOption('repos'), repos)
-            expect_equal(getOption('pkgType'), pkgType)
           }
           )
