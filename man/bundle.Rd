@@ -31,16 +31,4 @@
   overridden, according to the user's options, and set back
   to the
 }
-\examples{
-bundle(
-   system.file(package='rbundler', 'tests', 'no-dependencies'),
-   lib=sprintf(file.path(tempdir(), 'rbundler_example_no_dependencies')),
-   repos=c("http://cran.us.r-project.org")
-)
-bundle(
-   system.file(package='rbundler', 'tests', 'simple-dependencies'),
-   lib=file.path(tempdir(), 'rbundler_example_simple_dependencies'),
-   repos=c("http://cran.us.r-project.org")
-)
-}
 
