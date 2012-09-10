@@ -16,18 +16,6 @@
 #' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
 #' @export
-#' @examples
-#' 
-#' bundle(
-#'    system.file(package='rbundler', 'tests', 'no-dependencies'),
-#'    lib=sprintf(file.path(tempdir(), 'rbundler_example_no_dependencies')),
-#'    repos=c("http://cran.us.r-project.org")
-#' )
-#' bundle(
-#'    system.file(package='rbundler', 'tests', 'simple-dependencies'),
-#'    lib=file.path(tempdir(), 'rbundler_example_simple_dependencies'),
-#'    repos=c("http://cran.us.r-project.org")
-#' )
 bundle <- function(pkg='.',
                    lib=file.path(pkg, '.Rbundle'),
                    repos = getOption("repos"),
