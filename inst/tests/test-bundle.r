@@ -67,7 +67,7 @@ test_bundle(
 test_bundle(
             desc = "Bundling a package with dependencies creates a bundle directory with the project installed and all dependencies installed.",
             pkg = "simple-dependencies",
-            expected_dependencies=c('PerformanceAnalytics')
+            expected_dependencies=c('plyr')
             )
 
 test_that(

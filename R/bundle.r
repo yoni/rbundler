@@ -13,6 +13,7 @@
 #'
 #'        Can be 'NULL' to install from local files (with extension
 #'        '.tar.gz' for source packages).
+#' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
 #' @export
 #' @examples
@@ -29,7 +30,8 @@
 #' )
 bundle <- function(pkg='.',
                    lib=file.path(pkg, '.Rbundle'),
-                   repos = getOption("repos")
+                   repos = getOption("repos"),
+                   ...
                    ) {
 
   repositories <- getOption("repos")
@@ -46,7 +48,7 @@ bundle <- function(pkg='.',
     .libPaths(c(lib, .libPaths()))
 
     message("Bundling package ", pkg, " dependencies into library ", lib)
-    install(pkg)
+    install(pkg, ...)
 
   }, finally = {
     options(repos = repositories)
