@@ -38,7 +38,7 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
                 bundle_dependency_path <- file.path(lib, dependency)
 
                 expect_true(
-                            file.exists(bundle_dependency_path),
+                            file.exists(bundle_dependency_path) || dependency %in% installed.packages()[,1],
                             sprintf(
                                     "Dependency was not successfully installed into bundler library: [%s]",
                                     bundle_dependency_path
@@ -67,7 +67,7 @@ test_bundle(
 test_bundle(
             desc = "Bundling a package with dependencies creates a bundle directory with the project installed and all dependencies installed.",
             pkg = "simple-dependencies",
-            expected_dependencies=c('plyr')
+            expected_dependencies=c('PerformanceAnalytics')
             )
 
 test_that(

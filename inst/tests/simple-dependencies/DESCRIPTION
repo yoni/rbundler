@@ -7,6 +7,6 @@ Author: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
 Maintainer: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
 Version: 0.1
 Depends:
-    plyr
+    PerformanceAnalytics
 Collate:
     ''
