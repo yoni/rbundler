@@ -12,7 +12,8 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
               package <- as.package(pkg)
 
               lib <- file.path(
-                               'tmp', 'rbundler_build',
+                               dirname(tempdir()),
+                               'rbundler_build',
                                sprintf("%s.%s.Rbundle", as.numeric(Sys.time()), package$package)
                                )
 
