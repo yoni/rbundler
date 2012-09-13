@@ -2,8 +2,7 @@
 \alias{bundle}
 \title{Bundles a package and it's dependencies into a library.}
 \usage{
-  bundle(pkg = ".", lib = file.path(pkg, ".Rbundle"),
-    repos = getOption("repos"), ...)
+  bundle(pkg = ".", repos = getOption("repos"), ...)
 }
 \arguments{
   \item{pkg}{package description, can be path or package

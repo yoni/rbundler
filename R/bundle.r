@@ -15,13 +15,16 @@
 #'        '.tar.gz' for source packages).
 #' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
+#' @importFrom devtools as.package
 #' @export
 bundle <- function(pkg='.',
-                   lib=file.path(pkg, '.Rbundle'),
                    repos = getOption("repos"),
                    ...
                    ) {
 
+  package <- as.package(pkg)
+
+  lib <- file.path(package$path, '.Rbundle')
   repositories <- getOption("repos")
 
   tryCatch({
@@ -32,11 +35,14 @@ bundle <- function(pkg='.',
     options(repos = temp_repositories)
 
     dir.create(lib, recursive=TRUE, showWarnings = FALSE)
+    Sys.setenv(R_LIBS_USER=lib)
  
-    .libPaths(c(lib, .libPaths()))
+    renvironFileConnection <- file(file.path(package$path, ".Renviron"))
+    writeLines(sprintf("R_LIBS_USER='%s'", basename(lib)), renvironFileConnection)
+    close(renvironFileConnection)
 
-    message("Bundling package ", pkg, " dependencies into library ", lib)
-    install(pkg, ...)
+    message("Bundling package ", package$path, " dependencies into library ", lib)
+    install(package$path, ...)
 
   }, finally = {
     options(repos = repositories)
@@ -46,4 +52,3 @@ bundle <- function(pkg='.',
   invisible()
 
 }
-
