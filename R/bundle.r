@@ -13,25 +13,18 @@
 #'
 #'        Can be 'NULL' to install from local files (with extension
 #'        '.tar.gz' for source packages).
+#' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
+#' @importFrom devtools as.package
 #' @export
-#' @examples
-#' 
-#' bundle(
-#'    system.file(package='rbundler', 'tests', 'no-dependencies'),
-#'    lib=sprintf(file.path(tempdir(), 'rbundler_example_no_dependencies')),
-#'    repos=c("http://cran.us.r-project.org")
-#' )
-#' bundle(
-#'    system.file(package='rbundler', 'tests', 'simple-dependencies'),
-#'    lib=file.path(tempdir(), 'rbundler_example_simple_dependencies'),
-#'    repos=c("http://cran.us.r-project.org")
-#' )
 bundle <- function(pkg='.',
-                   lib=file.path(pkg, '.Rbundle'),
-                   repos = getOption("repos")
+                   repos = getOption("repos"),
+                   ...
                    ) {
 
+  package <- as.package(pkg)
+
+  lib <- file.path(package$path, '.Rbundle')
   repositories <- getOption("repos")
 
   tryCatch({
@@ -42,11 +35,14 @@ bundle <- function(pkg='.',
     options(repos = temp_repositories)
 
     dir.create(lib, recursive=TRUE, showWarnings = FALSE)
+    Sys.setenv(R_LIBS_USER=lib)
  
-    .libPaths(c(lib, .libPaths()))
+    renvironFileConnection <- file(file.path(package$path, ".Renviron"))
+    writeLines(sprintf("R_LIBS_USER='%s'", basename(lib)), renvironFileConnection)
+    close(renvironFileConnection)
 
-    message("Bundling package ", pkg, " dependencies into library ", lib)
-    install(pkg)
+    message("Bundling package ", package$path, " dependencies into library ", lib)
+    install(package$path, ...)
 
   }, finally = {
     options(repos = repositories)
@@ -56,4 +52,3 @@ bundle <- function(pkg='.',
   invisible()
 
 }
-
