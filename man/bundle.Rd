@@ -8,9 +8,6 @@
   \item{pkg}{package description, can be path or package
   name.}
 
-  \item{lib}{library in which to install the package and
-  it's dependencies.}
-
   \item{repos}{character vector, the base URLs of the
   repositories to use, e.g., the URL of a CRAN mirror such
   as '"http://cran.us.r-project.org"'.
