@@ -1,3 +1,10 @@
+rbundler 0.2
+--------------
+
+Removes `libs` option.
+
+Uses a combination of `.Renviron` and `PROJECT_ROOT/.Rbundle` library location. 
+
 rbundler 0.1.1
 --------------
 

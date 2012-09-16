@@ -6,7 +6,6 @@
 #' Note that repository and pkgType options are temporarily overridden,
 #' according to the user's options, and set back to the 
 #' @param pkg package description, can be path or package name.
-#' @param lib library in which to install the package and it's dependencies.
 #' @param repos character vector, the base URLs of the repositories to use,
 #'        e.g., the URL of a CRAN mirror such as
 #'        '"http://cran.us.r-project.org"'.
