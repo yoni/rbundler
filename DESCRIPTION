@@ -8,7 +8,6 @@ Title: Rbundler manages an application's dependencies systematically
 Description: Specify your dependencies in your project's root
     directory, and be able to install and use dependencies in a
     repeatable fashion without requiring manual maintenance.
-
     Uses a combination of project-specific R library in PROJECT_ROOT/.Rbundle
     and a project-specific R_LIBS_USER, set in PROJECT_ROOT/.Renviron
 Depends:
