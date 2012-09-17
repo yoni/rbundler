@@ -35,6 +35,7 @@ bundle <- function(pkg='.',
 
     dir.create(lib, recursive=TRUE, showWarnings = FALSE)
     Sys.setenv(R_LIBS_USER=lib)
+    .libPaths(lib)
  
     renvironFileConnection <- file(file.path(package$path, ".Renviron"))
     writeLines(sprintf("R_LIBS_USER='%s'", basename(lib)), renvironFileConnection)
