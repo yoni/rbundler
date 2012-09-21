@@ -1,3 +1,5 @@
 export(bundle)
+export(update_current_environment)
+export(update_renviron_file)
 importFrom(devtools,as.package)
 importFrom(devtools,install)

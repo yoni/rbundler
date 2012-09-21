@@ -2,7 +2,8 @@
 \alias{bundle}
 \title{Bundles a package and it's dependencies into a library.}
 \usage{
-  bundle(pkg = ".", repos = getOption("repos"), ...)
+  bundle(pkg = ".", repos = getOption("repos"),
+    bundle_path = "./.Rbundle", ...)
 }
 \arguments{
   \item{pkg}{package description, can be path or package
@@ -14,6 +15,9 @@
 
   Can be 'NULL' to install from local files (with extension
   '.tar.gz' for source packages).}
+
+  \item{bundle_path}{path to the bundle. Defaults to
+  '.Rbundle' under the current working directory}
 
   \item{...}{commands to be passed to devtools::install}
 }
