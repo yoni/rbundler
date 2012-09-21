@@ -1,3 +1,8 @@
+rbundler 0.2.2
+
+Bug Fix: Append to R_LIBS_USER, instead of overwriting it.
+Extracts and exports two new bundle environment helpers.
+
 rbundler 0.2
 --------------
 
