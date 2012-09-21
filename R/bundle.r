@@ -12,34 +12,42 @@
 #'
 #'        Can be 'NULL' to install from local files (with extension
 #'        '.tar.gz' for source packages).
+#' @param bundle_path path to the bundle. Defaults to '.Rbundle' under the current working directory 
 #' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
 #' @importFrom devtools as.package
 #' @export
 bundle <- function(pkg='.',
                    repos = getOption("repos"),
+                   bundle_path = './.Rbundle',
                    ...
                    ) {
 
   package <- as.package(pkg)
 
-  lib <- file.path(package$path, '.Rbundle')
+  lib <- file.path(package$path, bundle_path)
   repositories <- getOption("repos")
 
   tryCatch({
+
+    dir.create(lib, recursive=TRUE, showWarnings = FALSE)
 
     temp_repositories <- repositories
     temp_repositories["CRAN"] <- repos
 
     options(repos = temp_repositories)
 
-    dir.create(lib, recursive=TRUE, showWarnings = FALSE)
-    Sys.setenv(R_LIBS_USER=lib)
-    .libPaths(lib)
- 
-    renvironFileConnection <- file(file.path(package$path, ".Renviron"))
-    writeLines(sprintf("R_LIBS_USER='%s'", basename(lib)), renvironFileConnection)
-    close(renvironFileConnection)
+    r_libs_user = paste(Sys.getenv('R_LIBS_USER'), bundle_path, sep=':')
+
+    update_renviron_file(
+                         path = package$path,
+                         r_libs_user = r_libs_user
+                         )
+
+    update_current_environment(
+                               lib = lib,
+                               r_libs_user = r_libs_user
+                               )
 
     message("Bundling package ", package$path, " dependencies into library ", lib)
     install(package$path, ...)
@@ -48,6 +56,36 @@ bundle <- function(pkg='.',
     options(repos = repositories)
   })
 
+
+  invisible()
+
+}
+
+#' Updates the current environment.
+#' @export
+#' @param lib the R library to add.
+#' @param r_libs_user the new value of R_LIBS_USER
+update_current_environment <- function(lib, r_libs_user) {
+
+  Sys.setenv(R_LIBS_USER=r_libs_user)
+  .libPaths(c(lib, .libPaths()))
+
+  message("R_LIBS_USER=", r_libs_user)
+  message(".libPaths() =", .libPaths())
+
+  invisible()
+
+}
+
+#' Updates a .Renviron file in the given path.
+#' @export
+#' @param path to the .Renviron file
+#' @param r_libs_user the new value of R_LIBS_USER
+update_renviron_file <- function(path, r_libs_user) {
+
+  renviron <- file(file.path(package$path, ".Renviron"))
+  writeLines(sprintf("R_LIBS_USER='%s'", r_libs_user), renviron)
+  close(renviron)
 
   invisible()
 
