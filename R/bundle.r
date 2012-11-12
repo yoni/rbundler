@@ -83,7 +83,7 @@ update_current_environment <- function(lib, r_libs_user) {
 #' @param r_libs_user the new value of R_LIBS_USER
 update_renviron_file <- function(path, r_libs_user) {
 
-  renviron <- file(file.path(package$path, ".Renviron"))
+  renviron <- file(file.path(path, ".Renviron"))
   writeLines(sprintf("R_LIBS_USER='%s'", r_libs_user), renviron)
   close(renviron)
 
