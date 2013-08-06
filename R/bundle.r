@@ -4,7 +4,7 @@
 #' library is also added to this session's .libPaths.
 #'
 #' Note that repository and pkgType options are temporarily overridden,
-#' according to the user's options, and set back to the 
+#' according to the user's options, and set back to the
 #' @param pkg package description, can be path or package name.
 #' @param repos character vector, the base URLs of the repositories to use,
 #'        e.g., the URL of a CRAN mirror such as
@@ -12,12 +12,12 @@
 #'
 #'        Can be 'NULL' to install from local files (with extension
 #'        '.tar.gz' for source packages).
-#' @param bundle_path path to the bundle. Defaults to '.Rbundle' under the current working directory 
+#' @param bundle_path path to the bundle. Defaults to '.Rbundle' under the current working directory
 #' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
 #' @importFrom devtools as.package
 #' @export
-bundle <- function(pkg='.',
+bundle <- function(pkg = '.',
                    repos = getOption("repos"),
                    bundle_path = './.Rbundle',
                    ...
@@ -25,12 +25,11 @@ bundle <- function(pkg='.',
 
   package <- as.package(pkg)
 
-  lib <- file.path(package$path, bundle_path)
   repositories <- getOption("repos")
 
   tryCatch({
 
-    dir.create(lib, recursive=TRUE, showWarnings = FALSE)
+    dir.create(bundle_path, recursive=TRUE, showWarnings = FALSE)
 
     temp_repositories <- repositories
     temp_repositories["CRAN"] <- repos
@@ -45,11 +44,11 @@ bundle <- function(pkg='.',
                          )
 
     update_current_environment(
-                               lib = lib,
+                               lib = bundle_path,
                                r_libs_user = r_libs_user
                                )
 
-    message("Bundling package ", package$path, " dependencies into library ", lib)
+    message("Bundling package ", package$path, " dependencies into library ", bundle_path)
     install(package$path, ...)
 
   }, finally = {
