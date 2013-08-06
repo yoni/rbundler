@@ -1,0 +1,12 @@
+Package: simpledependencies
+Title: A mock package for testing that a package with some dependencies
+       can be bundled. See test_bundle.r
+License: GPL-2
+Description: 
+Author: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
+Maintainer: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
+Version: 0.1
+Depends:
+    PerformanceAnalytics
+Collate:
+    ''
