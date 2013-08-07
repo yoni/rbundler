@@ -19,3 +19,8 @@ Suggests:
 Collate:
     'rbundler-package.r'
     'bundle.r'
+    'dependency_urls.r'
+    'load_available_packages.r'
+    'create_package_description.r'
+    'create_package.r'
+    'create_mock_packages.r'

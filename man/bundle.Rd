@@ -3,7 +3,7 @@
 \title{Bundles a package and it's dependencies into a library.}
 \usage{
   bundle(pkg = ".", repos = getOption("repos"),
-    bundle_path = "./.Rbundle", ...)
+    bundle_path = file.path(pkg, ".Rbundle"))
 }
 \arguments{
   \item{pkg}{package description, can be path or package

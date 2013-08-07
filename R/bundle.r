@@ -19,13 +19,13 @@
 #' @export
 bundle <- function(pkg = '.',
                    repos = getOption("repos"),
-                   bundle_path = './.Rbundle',
-                   ...
+                   bundle_path = file.path(pkg, '.Rbundle')
                    ) {
 
   package <- as.package(pkg)
 
   repositories <- getOption("repos")
+
 
   tryCatch({
 
@@ -49,7 +49,13 @@ bundle <- function(pkg = '.',
                                )
 
     message("Bundling package ", package$path, " dependencies into library ", bundle_path)
-    install(package$path, ...)
+
+    urls <- dependency_urls(package)
+    for(dependency_url in urls) {
+      install_url(dependency_url)
+    }
+
+    install(pkg)
 
   }, finally = {
     options(repos = repositories)
@@ -89,3 +95,4 @@ update_renviron_file <- function(path, r_libs_user) {
   invisible()
 
 }
+
