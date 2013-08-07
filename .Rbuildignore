@@ -2,4 +2,7 @@
 \.idea
 README.markdown
 .*.iml
+\.Renviron
+.*.tar.gz
+\.Rbundle
 

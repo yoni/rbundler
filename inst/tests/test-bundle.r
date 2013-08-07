@@ -1,28 +1,25 @@
-context("A developer can bundle all a package and it's dependencies.")
+context("A developer can bundle a package and it's dependencies.")
 
-#' Ensures that a pcakage and it's dependencies are installed when running 'bundle'
+repos <- 'http://cran.rstudio.com'
+options(repos = repos)
+options(pkgType = 'source')
+
+#' Ensures that a package and it's dependencies are installed when running 'bundle'
 #' @param desc a description of the test
-#' @param pkg The package to test
+#' @param package the package to test
 #' @param expected_dependencies A vector of dependencies which must be installed
-test_bundle <- function(desc, pkg, expected_dependencies) {
+test_bundle <- function(desc, package, expected_dependencies, confirm_dependency_versions = FALSE) {
   test_that(
             desc,
             {
 
-              full_path <- system.file(file.path('tests', pkg), package='rbundler')
-              message("Full path to the package: [%s]", full_path)
-              package <- as.package(full_path)
+              lib <- file.path(package$path, ".Rbundle")
 
-              lib <- file.path(
-                               full_path,
-                               sprintf(".Rbundle.%s", as.numeric(Sys.time()))
-                               )
-
-              bundle(pkg = package$path, bundle_path = lib, repos=c("http://cran.us.r-project.org"))
+              bundle(pkg = package$path, bundle_path = lib)
 
               expect_true(
                           file.exists(lib),
-                          sprintf("Bundler library [%s] was not created.", lib)
+                          info=sprintf("Bundler library [%s] was not created.", lib)
                           )
 
               bundle_package_path <- file.path(lib, package$package)
@@ -37,8 +34,7 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
 
               for(dependency in expected_dependencies) {
 
-                bundle_dependency_path <- file.path(lib, dependency)
-                message("Expecting dependency [%s] in path [%s]", dependency, bundle_dependency_path)
+                bundle_dependency_path <- file.path(lib, dependency$name)
 
                 expect_true(
                             file.exists(bundle_dependency_path),
@@ -48,6 +44,13 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
                                     )
                             )
 
+                if(confirm_dependency_versions) {
+
+                  package <- as.package(bundle_dependency_path)
+                  expect_equal(package$version, dependency$version)
+
+                }
+
               }
 
               # Note: we're checking that only the basename of the library is in libPaths, due to an issue with OS X
@@ -55,21 +58,33 @@ test_bundle <- function(desc, pkg, expected_dependencies) {
               # points to '/private/var'.
               expect_match(basename(lib), basename(.libPaths()), all=FALSE, info=sprintf("Did not find [%s] in .libPaths().", lib))
 
-              unlink(lib, recursive=TRUE)
+              # Reset libraries for the next test.
+              .libPaths('new')
 
             }
             )
 }
 
+test_path <- file.path(tempdir(), '..', sprintf('bundle-test-%s', as.numeric(Sys.time())))
+dir.create(test_path)
+dependency <- mock_dependency(repos=repos)
+mock_packages <- create_mock_packages(test_path, dependency, repos)
+
 test_bundle(
             desc = "Bundling a package with no dependencies creates a bundle directory with the project installed and no dependencies installed.",
-            pkg = 'no-dependencies',
-            expected_dependencies = c()
+            package = mock_packages[['nodependencies']],
+            expected_dependencies = list()
             )
 
 test_bundle(
             desc = "Bundling a package with dependencies creates a bundle directory with the project installed and all dependencies installed.",
-            pkg = "simple-dependencies",
-            expected_dependencies=c('PerformanceAnalytics')
+            package = mock_packages[["simpledependencies"]],
+            expected_dependencies=list(dependency)
             )
 
+test_bundle(
+            desc = "Bundling a package with versioned dependencies creates a bundle directory with the project installed, all dependencies installed, and correct dependency versions.",
+            package = mock_packages[["versioneddependencies"]],
+            expected_dependencies=list(dependency),
+            confirm_dependency_versions = TRUE
+            )

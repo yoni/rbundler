@@ -5,11 +5,13 @@ Version: 0.3.0
 License: GPL-3
 Title: Rbundler manages an application's dependencies systematically
     and repeatedly.
-Description: Specify your dependencies in your project's root
-    directory, and be able to install and use dependencies in a
+Description: Rbundler manages project-specific libraries and package
+    installations. By specifying dependencies in your project's root
+    directory, you may install and use dependencies in a
     repeatable fashion without requiring manual maintenance.
-    Uses a combination of project-specific R library in PROJECT_ROOT/.Rbundle
-    and a project-specific R_LIBS_USER, set in PROJECT_ROOT/.Renviron
+    Rbundler uses a combination of a project-specific R library in
+    `PROJECT_ROOT/.Rbundle` (by default) and a project-specific
+    `R_LIBS_USER` value, set in `PROJECT_ROOT/.Renviron`.
 Depends:
     R (>= 2.15.1),
     devtools (>= 0.7)
@@ -19,3 +21,8 @@ Suggests:
 Collate:
     'rbundler-package.r'
     'bundle.r'
+    'load_available_packages.r'
+    'create_package_description.r'
+    'create_package.r'
+    'create_mock_packages.r'
+    'install_version.r'
