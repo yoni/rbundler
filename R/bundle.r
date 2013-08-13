@@ -4,61 +4,69 @@
 #' library is also added to this session's .libPaths.
 #'
 #' Note that repository and pkgType options are temporarily overridden,
-#' according to the user's options, and set back to the 
+#' according to the user's options, and set back to their previous values after
+#' bundle completes.
 #' @param pkg package description, can be path or package name.
-#' @param repos character vector, the base URLs of the repositories to use,
-#'        e.g., the URL of a CRAN mirror such as
-#'        '"http://cran.us.r-project.org"'.
-#'
-#'        Can be 'NULL' to install from local files (with extension
-#'        '.tar.gz' for source packages).
-#' @param bundle_path path to the bundle. Defaults to '.Rbundle' under the current working directory 
+#' @param bundle_path path to the bundle. Defaults to '.Rbundle' under the package directory
 #' @param ... commands to be passed to devtools::install
 #' @importFrom devtools install
 #' @importFrom devtools as.package
 #' @export
-bundle <- function(pkg='.',
-                   repos = getOption("repos"),
-                   bundle_path = './.Rbundle',
-                   ...
-                   ) {
+#' @examples
+#'\dontrun{
+#' # Run bundle in the current path:
+#' bundle()
+#' # Check for the new `.Rbundle` entry in `.libPaths`:
+#' .libPaths()
+#'
+#' lib <- file.path(tempdir(), 'my_bundle_lib')
+#' # Run bundle in the current path, overriding the target library:
+#' bundle('.', lib)
+#' # Check for the new entry in `.libPaths`:
+#' .libPaths()
+#'}
+bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle')) {
 
   package <- as.package(pkg)
 
-  lib <- file.path(package$path, bundle_path)
-  repositories <- getOption("repos")
+  dir.create(bundle_path, recursive = TRUE, showWarnings = FALSE)
 
-  tryCatch({
+  r_libs_user <- construct_r_libs_user(bundle_path)
 
-    dir.create(lib, recursive=TRUE, showWarnings = FALSE)
+  update_renviron_file(path = package$path, r_libs_user = r_libs_user)
+  update_current_environment(lib = bundle_path, r_libs_user = r_libs_user)
 
-    temp_repositories <- repositories
-    temp_repositories["CRAN"] <- repos
+  message("Bundling package ", package$path, " dependencies into library ", bundle_path)
 
-    options(repos = temp_repositories)
+  if (!is.null(package$depends)) {
 
-    r_libs_user = paste(Sys.getenv('R_LIBS_USER'), bundle_path, sep=':')
+    depends <- devtools:::parse_deps(package$depends)
 
-    update_renviron_file(
-                         path = package$path,
-                         r_libs_user = r_libs_user
-                         )
+    if(nrow(depends) > 0) {
+      apply(
+        depends,
+        1,
+        FUN = function(d) {
+          install_version(d['name'], d['version'], d['compare'])
+        }
+      )
+    }
 
-    update_current_environment(
-                               lib = lib,
-                               r_libs_user = r_libs_user
-                               )
+  }
 
-    message("Bundling package ", package$path, " dependencies into library ", lib)
-    install(package$path, ...)
-
-  }, finally = {
-    options(repos = repositories)
-  })
-
+  install(pkg)
 
   invisible()
 
+}
+
+#' Constructs a new R_LIBS_USER setting using the current libraries and the new bundle library.
+#' @param bundle_path the new bundle path
+#' @return r_libs_user colon-separated libraries
+construct_r_libs_user <- function(bundle_path) {
+  current_libs <- unlist(strsplit(Sys.getenv('R_LIBS_USER'), split=':'))
+  new_libs <- unique(c(current_libs, bundle_path))
+  paste(new_libs, collapse=':')
 }
 
 #' Updates the current environment.
@@ -90,3 +98,4 @@ update_renviron_file <- function(path, r_libs_user) {
   invisible()
 
 }
+

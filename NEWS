@@ -1,4 +1,25 @@
+rbundler 0.3.0
+--------------
+
+* Adds support for installing versioned dependencies for source-type packages.
+Retrieves the set of available packages from the current repository's root and
+archive (if an archive exists, e.g. in CRAN-like repositories), then
+cross-references these packages with the bundled package dependencies, determining
+which package versions to install. Constructs a list of URLs of packages to
+install, and uses the `devtools` utility function `install_url` to install them.
+
+* Removes `repos` option from the main call to `bundle`. The caller should now have
+the repository set in their environment (i.e. using `options(repos='http://myrepo')
+
+* Re-introduces integration tests and adds mock package creation utilities: `create_mock_packages`
+
+* Adds utility functions for discoery of package versions: `find_available_versions`
+
+* Supports CRAN-like Archive directories, as well as single-directory repositories.
+
+
 rbundler 0.2.2
+--------------
 
 Bug Fix: Append to R_LIBS_USER, instead of overwriting it.
 Extracts and exports two new bundle environment helpers.

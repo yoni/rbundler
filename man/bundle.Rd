@@ -2,22 +2,15 @@
 \alias{bundle}
 \title{Bundles a package and it's dependencies into a library.}
 \usage{
-  bundle(pkg = ".", repos = getOption("repos"),
-    bundle_path = "./.Rbundle", ...)
+  bundle(pkg = ".",
+    bundle_path = file.path(pkg, ".Rbundle"))
 }
 \arguments{
   \item{pkg}{package description, can be path or package
   name.}
 
-  \item{repos}{character vector, the base URLs of the
-  repositories to use, e.g., the URL of a CRAN mirror such
-  as '"http://cran.us.r-project.org"'.
-
-  Can be 'NULL' to install from local files (with extension
-  '.tar.gz' for source packages).}
-
   \item{bundle_path}{path to the bundle. Defaults to
-  '.Rbundle' under the current working directory}
+  '.Rbundle' under the package directory}
 
   \item{...}{commands to be passed to devtools::install}
 }
@@ -29,6 +22,20 @@
 \details{
   Note that repository and pkgType options are temporarily
   overridden, according to the user's options, and set back
-  to the
+  to their previous values after bundle completes.
+}
+\examples{
+\dontrun{
+# Run bundle in the current path:
+bundle()
+# Check for the new `.Rbundle` entry in `.libPaths`:
+.libPaths()
+
+lib <- file.path(tempdir(), 'my_bundle_lib')
+# Run bundle in the current path, overriding the target library:
+bundle('.', lib)
+# Check for the new entry in `.libPaths`:
+.libPaths()
+}
 }
 
