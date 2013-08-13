@@ -31,7 +31,7 @@ bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle')) {
 
   dir.create(bundle_path, recursive = TRUE, showWarnings = FALSE)
 
-  r_libs_user = paste(Sys.getenv('R_LIBS_USER'), bundle_path, sep=':')
+  r_libs_user <- construct_r_libs_user(bundle_path)
 
   update_renviron_file(path = package$path, r_libs_user = r_libs_user)
   update_current_environment(lib = bundle_path, r_libs_user = r_libs_user)
@@ -58,6 +58,15 @@ bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle')) {
 
   invisible()
 
+}
+
+#' Constructs a new R_LIBS_USER setting using the current libraries and the new bundle library.
+#' @param bundle_path the new bundle path
+#' @return r_libs_user colon-separated libraries
+construct_r_libs_user <- function(bundle_path) {
+  current_libs <- unlist(strsplit(Sys.getenv('R_LIBS_USER'), split=':'))
+  new_libs <- unique(c(current_libs, bundle_path))
+  paste(new_libs, collapse=':')
 }
 
 #' Updates the current environment.
