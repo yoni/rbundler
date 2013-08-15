@@ -16,6 +16,7 @@
 #'   archived source tarballs and tries to install an older version instead.
 #' @param compare If specified, and if the version is specified, enforces comparison of the package version. Valid values: ==, <, >, >=, or <=
 #' @param ... Other arguments passed on to \code{\link{install}}.
+#' @return whether the version was installed
 #' @inheritParams utils::install.packages
 #' @author Jeremy Stephens
 #' @author Yoni Ben-Meshulam
@@ -26,11 +27,73 @@ install_version <- function(package, version = NA, compare = NA, repos = getOpti
 
   validate_compare(compare)
 
-  available_versions <- find_available_versions(package, repos, type)
-  version_to_install <- determine_version_to_install(available_versions$version, version, compare)
-  url <- available_versions[available_versions$version == version_to_install, 'url']
+  should_install <- validate_installed_package(package, version, compare)
 
-  install_url(url, ...)
+  if(should_install) {
+    available_versions <- find_available_versions(package, repos, type)
+    version_to_install <- determine_version_to_install(available_versions$version, version, compare)
+    url <- available_versions[available_versions$version == version_to_install, 'url']
+
+    install_url(url, ...)
+  }
+
+  should_install
+
+}
+
+#' Checks whether a package has already been installed. If it has, and if the version corresponds to the
+#' required package version, then it returns TRUE. If it has been installed and the version does
+#' not correspond to the required version, then it throws an exception. Otherwise, it returns false.
+#' @param package the package to check
+#' @param version the required version
+#' @param compare the comparison operator
+#' @return whether we should install the package
+validate_installed_package <- function(package, version, compare) {
+
+  should_install <- TRUE
+
+  packages <- as.data.frame(installed.packages(), stringsAsFactors=FALSE)
+
+  if(package %in% row.names(packages)) {
+
+    installed_package <- packages[package,]
+    message(
+      sprintf(
+        "Package [%s] with version [%s] is already installed in library [%s].",
+        package,
+        installed_package$Version,
+        installed_package$LibPath
+      )
+    )
+
+    if(is.na(compare)) {
+
+      should_install <- FALSE
+
+    } else {
+
+      if(compare_versions(version, compare, installed_package$Version)) {
+
+        should_install <- FALSE
+
+      } else {
+
+        stop(
+          sprintf(
+            "Installed package [%s] is of the wrong version. Required: [%s]. Actual: [%s]",
+            package,
+            version,
+            installed_package$Version
+          )
+        )
+
+      }
+
+    }
+
+  }
+
+  should_install
 
 }
 
@@ -60,16 +123,7 @@ determine_version_to_install <- function(available_versions, version, compare) {
     matching_version_indices <- sapply(
       available_versions,
       FUN = function(d) {
-        eval(
-          parse(
-            text = sprintf(
-              "'%s' %s '%s'",
-              d,
-              compare,
-              version
-            )
-          )
-        )
+        compare_versions(d, compare, version)
       }
     )
 
@@ -79,6 +133,23 @@ determine_version_to_install <- function(available_versions, version, compare) {
 
   max(matching_versions)
 
+}
+
+#' Compares the requested version to the available version using the compare operator.
+#' @param requested the requested version
+#' @param compare the comparison operator
+#' @param version the available version
+compare_versions <- function(requested, compare, version) {
+  eval(
+    parse(
+      text = sprintf(
+        "'%s' %s '%s'",
+        requested,
+        compare,
+        version
+      )
+    )
+  )
 }
 
 #' Retrieves a list of available versions for a package.

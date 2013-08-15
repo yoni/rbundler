@@ -47,6 +47,9 @@
   In interactive use it will ask before attempting to
   install source packages.)  }
 }
+\value{
+  whether the version was installed
+}
 \description{
   If you are installing an package that contains compiled
   code, you will need to have an R development environment

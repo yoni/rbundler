@@ -3,7 +3,8 @@
 \title{Bundles a package and it's dependencies into a library.}
 \usage{
   bundle(pkg = ".",
-    bundle_path = file.path(pkg, ".Rbundle"))
+    bundle_path = file.path(pkg, ".Rbundle"),
+    overwrite = FALSE)
 }
 \arguments{
   \item{pkg}{package description, can be path or package
@@ -12,7 +13,10 @@
   \item{bundle_path}{path to the bundle. Defaults to
   '.Rbundle' under the package directory}
 
-  \item{...}{commands to be passed to devtools::install}
+  \item{overwrite}{whether to delete the existing bundle
+  library and re-install all packages. This can be
+  necessary when upgrading or downgrading package
+  dependencies. Defaults to FALSE}
 }
 \description{
   Dependencies are installed into the package's bundle
