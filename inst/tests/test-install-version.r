@@ -17,6 +17,8 @@ create_new_lib <- function() {
 test_that('can compare an available version with a requested version', {
   expect_true(compare_versions('1', '==', '1'))
   expect_false(compare_versions('2', '==', '1'))
+  expect_true(compare_versions('2', '>=', '1'))
+  expect_true(compare_versions('0.2.2', '>=', '0.2.1'))
 })
 
 test_that('the correct version for installation can be determined',{

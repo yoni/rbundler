@@ -72,7 +72,7 @@ validate_installed_package <- function(package, version, compare) {
 
     } else {
 
-      if(compare_versions(version, compare, installed_package$Version)) {
+      if(compare_versions(installed_package$Version, compare, version)) {
 
         should_install <- FALSE
 
