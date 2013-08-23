@@ -21,13 +21,13 @@ create_mock_packages <- function(path, dependency, repos=getOption('repos')) {
     simpledependencies = create_package(
       name='simpledependencies',
       title='A mock package for testing that a package with basic dependencies can be bundled.',
-      dependencies=data.frame(package=c(dependency$name), compare=c(NA), version=c(NA)),
+      dependencies=data.frame(type=c('Depends'), package=c(dependency$name), compare=c(NA), version=c(NA)),
       path=path
     ),
     versioneddependencies= create_package(
       name='versioneddependencies',
       title='A mock package for testing that a package with versioned dependencies can be bundled.',
-      dependencies=data.frame(package=c(dependency$name), compare=c('=='), version=c(dependency$version)),
+      dependencies=data.frame(type=c('Depends'), package=c(dependency$name), compare=c('=='), version=c(dependency$version)),
       path=path
     )
   )

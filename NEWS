@@ -1,3 +1,9 @@
+rbundler 0.3.3
+--------------
+
+* Upgrade to devtools 1.3
+* Introduce dependencies option to control installation of "Depends", "Imports", "LinkingTo", and "Suggests" dependencies.
+
 rbundler 0.3.2
 --------------
 

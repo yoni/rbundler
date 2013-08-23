@@ -1,8 +1,8 @@
-\name{depends_clause}
-\alias{depends_clause}
+\name{dependency_clauses}
+\alias{dependency_clauses}
 \title{Creates the `Depends:` clause by concatenating individual packages and adding their compare clauses.}
 \usage{
-  depends_clause(dependencies)
+  dependency_clauses(dependencies)
 }
 \arguments{
   \item{dependencies}{a data.frame with dependency package,

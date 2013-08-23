@@ -4,7 +4,8 @@
 \usage{
   bundle(pkg = ".",
     bundle_path = file.path(pkg, ".Rbundle"),
-    overwrite = FALSE)
+    overwrite = FALSE,
+    dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
 }
 \arguments{
   \item{pkg}{package description, can be path or package
@@ -17,6 +18,10 @@
   library and re-install all packages. This can be
   necessary when upgrading or downgrading package
   dependencies. Defaults to FALSE}
+
+  \item{dependencies}{which package dependencies to
+  install. Defaults to c("Depends", "Imports", "LinkingTo",
+  "Suggests")}
 }
 \description{
   Dependencies are installed into the package's bundle

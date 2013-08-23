@@ -10,6 +10,7 @@
 #' @param bundle_path path to the bundle. Defaults to '.Rbundle' under the package directory
 #' @param overwrite whether to delete the existing bundle library and re-install all packages. This can be necessary when
 #'        upgrading or downgrading package dependencies. Defaults to FALSE
+#' @param dependencies which package dependencies to install. Defaults to c("Depends", "Imports", "LinkingTo", "Suggests")
 #' @importFrom devtools install
 #' @importFrom devtools as.package
 #' @export
@@ -26,7 +27,8 @@
 #' # Check for the new entry in `.libPaths`:
 #' .libPaths()
 #'}
-bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle'), overwrite = FALSE) {
+bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle'), overwrite = FALSE,
+  dependencies = c("Depends", "Imports", "LinkingTo", "Suggests")) {
 
   package <- as.package(pkg)
 
@@ -53,7 +55,10 @@ bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle'), overwrit
         depends,
         1,
         FUN = function(d) {
-          install_version(d['name'], d['version'], d['compare'])
+          install_version(
+            d['name'], d['version'], d['compare'],
+            dependencies = dependencies
+          )
         }
       )
     }
