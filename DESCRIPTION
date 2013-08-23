@@ -1,7 +1,7 @@
 Package: rbundler
 Maintainer: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
 Author: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
-Version: 0.3.2
+Version: 0.3.3
 License: GPL-3
 Title: Rbundler manages an application's dependencies systematically
     and repeatedly.
@@ -14,7 +14,7 @@ Description: Rbundler manages project-specific libraries and package
     `R_LIBS_USER` value, set in `PROJECT_ROOT/.Renviron`.
 Depends:
     R (>= 2.15.1),
-    devtools (>= 0.7)
+    devtools (>= 1.3)
 Suggests:
     testthat,
     roxygen2
