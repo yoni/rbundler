@@ -48,7 +48,7 @@ bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle'), overwrit
 
   if (!is.null(package$depends)) {
 
-    depends <- devtools:::parse_deps(package$depends)
+    depends <- devtools::parse_deps(package$depends)
 
     if(nrow(depends) > 0) {
       apply(
