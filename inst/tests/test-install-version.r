@@ -97,3 +97,16 @@ test_that('install_version throws an exception if a package has already been ins
   expect_error(install_version(dependency$name, dependency$version, '>'))
 
 })
+
+test_that('correct package suffix is returned', {
+  require('tools')
+  available_versions <- find_available_versions(dependency$name, type='source')
+  extension <- file_ext(available_versions$url[1])
+  expect_equal(extension, 'gz')
+  available_versions <- find_available_versions(dependency$name, type='mac.binary')
+  extension <- file_ext(available_versions$url[1])
+  expect_equal(extension, 'tgz')
+  available_versions <- find_available_versions(dependency$name, type='win.binary')
+  extension <- file_ext(available_versions$url[1])
+  expect_equal(extension, 'zip')
+}) 

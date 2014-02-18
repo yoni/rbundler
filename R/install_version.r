@@ -165,12 +165,14 @@ find_available_versions <- function(package, repos = getOption('repos'), type = 
   available <- as.data.frame(available.packages(contriburl, filters=c("R_version", "OS_type", "subarch")), stringsAsFactors=FALSE)
 
   root_versions <- data.frame(version=available[available$Package == package,]$Version, source='root', stringsAsFactors=FALSE)
-  root_versions$url <- file.path(contriburl, paste(package, "_", root_versions$version, ".tar.gz", sep = ""))
+  root_versions$url <- file.path(contriburl, paste(package, "_", root_versions$version, switch(type,
+            source = ".tar.gz", mac.binary = ".tgz", win.binary = ".zip"), sep = ""))
 
   archive <- read_archive_rds(repos)
   if (length(archive) != 0) {
     package_tarball_path <- row.names(archive[[package]])
-    archive_versions <- data.frame(version = sub('.*_(.*).tar.gz', '\\1', package_tarball_path), source='archive', stringsAsFactors=FALSE)
+    archive_versions <- data.frame(version = sub(switch(type,
+            source = ".*_(.*).tar.gz", mac.binary = ".*_(.*).tgz", win.binary = ".*_(.*).zip"), '\\1', package_tarball_path), source='archive', stringsAsFactors=FALSE)
     archive_versions$url <- file.path(contriburl, 'Archive', package_tarball_path)
 
     versions <- merge(root_versions, archive_versions, all=TRUE)
