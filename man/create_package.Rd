@@ -2,7 +2,7 @@
 \alias{create_package}
 \title{Creates a package matching the given description and dependencies.}
 \usage{
-  create_package(name, title, dependencies, path = ".")
+create_package(name, title, dependencies, path = ".")
 }
 \arguments{
   \item{name}{the package name}
@@ -16,12 +16,12 @@
   Defaults to the current path}
 }
 \value{
-  the package, as constructed using the `devtools`
-  `as.package` function
+the package, as constructed using the `devtools`
+`as.package` function
 }
 \description{
-  Creates a package matching the given description and
-  dependencies.
+Creates a package matching the given description and
+dependencies.
 }
 \examples{
 # Create a simple package with no dependencies:

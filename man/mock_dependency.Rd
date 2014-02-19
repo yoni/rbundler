@@ -2,8 +2,7 @@
 \alias{mock_dependency}
 \title{Creates a mock dependency - corresponding to a real package - for use in testing and experimentation.}
 \usage{
-  mock_dependency(name = "tempdisagg",
-    repos = getOption("repos"))
+mock_dependency(name = "tempdisagg", repos = getOption("repos"))
 }
 \arguments{
   \item{name}{the name of the package dependency}
@@ -12,10 +11,10 @@
   path}
 }
 \value{
-  list with the name and version of the dependency
+list with the name and version of the dependency
 }
 \description{
-  Creates a mock dependency - corresponding to a real
-  package - for use in testing and experimentation.
+Creates a mock dependency - corresponding to a real package
+- for use in testing and experimentation.
 }
 

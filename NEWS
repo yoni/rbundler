@@ -1,3 +1,8 @@
+rbundler 0.3.5
+--------------
+
+* Use correct suffix for CRAN binaries. Fixes #18. Thanks, @KentonWhite!
+
 rbundler 0.3.4
 --------------
 

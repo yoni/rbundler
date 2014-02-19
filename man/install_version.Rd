@@ -2,9 +2,8 @@
 \alias{install_version}
 \title{Install specified version or relative version of a CRAN package.}
 \usage{
-  install_version(package, version = NA, compare = NA,
-    repos = getOption("repos"),
-    type = getOption("pkgType"), ...)
+install_version(package, version = NA, compare = NA,
+  repos = getOption("repos"), type = getOption("pkgType"), ...)
 }
 \arguments{
   \item{package}{package name}
@@ -38,7 +37,7 @@
   installed on other platforms.
 
   The default is the appropriate binary type on Windows and
-  on the CRAN binary Mac OS X distribution, otherwise
+  on the CRAN binary OS X distribution, otherwise
   \code{"source"}.  For the platforms where binary packages
   are the default, an alternative is \code{"both"} which
   means \sQuote{try binary if available, otherwise try
@@ -48,23 +47,23 @@
   install source packages.)  }
 }
 \value{
-  whether the version was installed
+whether the version was installed
 }
 \description{
-  If you are installing an package that contains compiled
-  code, you will need to have an R development environment
-  installed.  You can check if you do by running
-  \code{\link{has_devel}}.
+If you are installing an package that contains compiled
+code, you will need to have an R development environment
+installed.  You can check if you do by running
+\code{\link{has_devel}}.
 }
 \details{
-  Note: This is an updated version of devtools
-  `install_version` It has been fixed to work with the
-  latest CRAN repository and updated to support version
-  comparisons (i.e. >, ==, <, etc.)
+Note: This is an updated version of devtools
+`install_version` It has been fixed to work with the latest
+CRAN repository and updated to support version comparisons
+(i.e. >, ==, <, etc.)
 }
 \author{
-  Jeremy Stephens
+Jeremy Stephens
 
-  Yoni Ben-Meshulam
+Yoni Ben-Meshulam
 }
 

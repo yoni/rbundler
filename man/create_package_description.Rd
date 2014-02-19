@@ -2,7 +2,7 @@
 \alias{create_package_description}
 \title{A Utility function for creating rbundler scenarios.}
 \usage{
-  create_package_description(name, title, dependencies)
+create_package_description(name, title, dependencies)
 }
 \arguments{
   \item{name}{the name of the package to create}
@@ -13,7 +13,7 @@
   package, compare, version set.}
 }
 \description{
-  A Utility function for creating rbundler scenarios.
+A Utility function for creating rbundler scenarios.
 }
 \examples{
 name <- 'simpledependency'

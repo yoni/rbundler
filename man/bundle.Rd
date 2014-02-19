@@ -2,10 +2,9 @@
 \alias{bundle}
 \title{Bundles a package and it's dependencies into a library.}
 \usage{
-  bundle(pkg = ".",
-    bundle_path = file.path(pkg, ".Rbundle"),
-    overwrite = FALSE,
-    dependencies = c("Depends", "Imports", "LinkingTo", "Suggests"))
+bundle(pkg = ".", bundle_path = file.path(pkg, ".Rbundle"),
+  overwrite = FALSE, dependencies = c("Depends", "Imports", "LinkingTo",
+  "Suggests"))
 }
 \arguments{
   \item{pkg}{package description, can be path or package
@@ -24,14 +23,14 @@
   "Suggests")}
 }
 \description{
-  Dependencies are installed into the package's bundle
-  library. The library is also added to this session's
-  .libPaths.
+Dependencies are installed into the package's bundle
+library. The library is also added to this session's
+.libPaths.
 }
 \details{
-  Note that repository and pkgType options are temporarily
-  overridden, according to the user's options, and set back
-  to their previous values after bundle completes.
+Note that repository and pkgType options are temporarily
+overridden, according to the user's options, and set back
+to their previous values after bundle completes.
 }
 \examples{
 \dontrun{

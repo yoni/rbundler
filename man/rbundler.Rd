@@ -4,7 +4,7 @@
 \alias{rbundler-package}
 \title{A package dependency management utility.}
 \description{
-  Rbundler is an R package dependency management utility.
+Rbundler is an R package dependency management utility.
 }
 \examples{
 \dontrun{
@@ -21,6 +21,6 @@ bundle('.', lib)
 }
 }
 \author{
-  Yoni Ben-Meshulam \email{yoni.bmesh@gmail.com}
+Yoni Ben-Meshulam \email{yoni.bmesh@gmail.com}
 }
 
