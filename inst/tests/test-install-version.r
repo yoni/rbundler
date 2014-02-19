@@ -98,15 +98,19 @@ test_that('install_version throws an exception if a package has already been ins
 
 })
 
-test_that('correct package suffix is returned', {
-  require('tools')
-  available_versions <- find_available_versions(dependency$name, type='source')
-  extension <- file_ext(available_versions$url[1])
-  expect_equal(extension, 'gz')
-  available_versions <- find_available_versions(dependency$name, type='mac.binary')
-  extension <- file_ext(available_versions$url[1])
-  expect_equal(extension, 'tgz')
-  available_versions <- find_available_versions(dependency$name, type='win.binary')
-  extension <- file_ext(available_versions$url[1])
-  expect_equal(extension, 'zip')
+test_that('correct package is returned for mac, windows, and source package versions', {
+
+  library('tools')
+
+  expect_package_extension <- function(type, expected_extension) {
+    available_versions <- find_available_versions(dependency$name, type=type)
+    extension <- file_ext(available_versions$url[1])
+    expect_equal(extension, expected_extension)
+  }
+
+  expect_package_extension(type='source', expected_extension='gz')
+  expect_package_extension(type='mac.binary', expected_extension='tgz')
+  expect_package_extension(type='win.binary', expected_extension='zip')
+
 }) 
+
