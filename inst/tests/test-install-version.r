@@ -104,7 +104,7 @@ test_that('correct package is returned for mac, windows, and source package vers
 
   expect_package_extension <- function(type, expected_extension) {
     available_versions <- find_available_versions(dependency$name, type=type)
-    extension <- file_ext(available_versions$url[1])
+    extension <- file_ext(available_versions[available_versions$source == 'root', ]$url)
     expect_equal(extension, expected_extension)
   }
 
