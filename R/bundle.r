@@ -13,6 +13,7 @@
 #' @param dependencies which package dependencies to install. Defaults to c("Depends", "Imports", "LinkingTo", "Suggests")
 #' @importFrom devtools install
 #' @importFrom devtools as.package
+#' @importFrom devtools install_version
 #' @export
 #' @examples
 #'\dontrun{
@@ -55,10 +56,14 @@ bundle <- function(pkg = '.', bundle_path = file.path(pkg, '.Rbundle'), overwrit
         depends,
         1,
         FUN = function(d) {
-          install_version(
-            d['name'], d['version'], d['compare'],
-            dependencies = dependencies
-          )
+          if(is.na(d['version'])) {
+            install_version(package=d['name'])
+          } else {
+            install_version(
+              package=d['name'],
+              version=d['version']
+            )
+          }
         }
       )
     }

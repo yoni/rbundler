@@ -45,6 +45,12 @@ dependency_clauses <- function(dependencies) {
   clauses <- c()
   for(type in unique(dependencies$type)) {
       type_dependencies <- dependencies[dependencies$type == type, ]
+
+      # Replace NULL values with NAs
+      if(is.null(type_dependencies$version)) {
+        type_dependencies$version <- NA
+      }
+
       clauses <- c(
         clauses,
         sprintf("%s:\n%s",

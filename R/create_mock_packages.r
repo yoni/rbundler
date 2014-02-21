@@ -21,7 +21,7 @@ create_mock_packages <- function(path, dependency, repos=getOption('repos')) {
     simpledependencies = create_package(
       name='simpledependencies',
       title='A mock package for testing that a package with basic dependencies can be bundled.',
-      dependencies=data.frame(type=c('Depends'), package=c(dependency$name), compare=c(NA), version=c(NA)),
+      dependencies=data.frame(type=c('Depends'), package=c(dependency$name)),
       path=path
     ),
     versioneddependencies= create_package(
@@ -40,8 +40,6 @@ create_mock_packages <- function(path, dependency, repos=getOption('repos')) {
 #' @return list with the name and version of the dependency
 #' @export
 mock_dependency <- function(name='tempdisagg', repos=getOption('repos')) {
-  available_versions <- find_available_versions(name, repos = repos)
-  # Grab the next-to-latest version of the package.
-  version <- available_versions[length(available_versions) - 1, 'version']
-  list(name=name, version=version)
+  list(name=name, version="0.22")
 }
+
