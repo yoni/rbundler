@@ -5,4 +5,5 @@ README.markdown
 \.Renviron
 .*.tar.gz
 \.Rbundle
+.travis.yml
 
