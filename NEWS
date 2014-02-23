@@ -1,3 +1,9 @@
+rbundler 0.3.6
+--------------
+
+* Bug fix for system-specific package installations.
+* Manage all test data within the R session tempdir, per the CRAN policy.
+
 rbundler 0.3.5
 --------------
 
