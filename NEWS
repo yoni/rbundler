@@ -1,3 +1,10 @@
+rbundler 0.3.6
+--------------
+
+* Bug fix for system-specific package installations.
+* Manage all test data within the R session tempdir, per the CRAN policy.
+* Upgrade testthat dependency and migrate to the recommended testthat directory structure
+
 rbundler 0.3.5
 --------------
 

@@ -59,7 +59,7 @@ test_bundle <- function(desc, package, expected_dependencies, confirm_dependency
                 # Note: we're checking that only the basename of the library is in libPaths, due to an issue with OS X
                 # having '/var' point to '/private/var'. R thinks it's using 'var', when in reality, .libPaths
                 # points to '/private/var'.
-                expect_match(basename(lib), basename(.libPaths()), all=FALSE, info=sprintf("Did not find [%s] in .libPaths().", lib))
+                expect_true(basename(lib) %in% basename(.libPaths()), info = sprintf("Did not find [%s] in .libPaths().", lib))
 
               }
 
@@ -77,7 +77,7 @@ test_bundle <- function(desc, package, expected_dependencies, confirm_dependency
             )
 }
 
-test_path <- file.path(tempdir(), '..', sprintf('bundle-test-%s', as.numeric(Sys.time())))
+test_path <- file.path(tempdir(), sprintf('bundle-test-%s', as.numeric(Sys.time())))
 dir.create(test_path)
 dependency <- mock_dependency(repos=repos)
 mock_packages <- create_mock_packages(test_path, dependency, repos)
