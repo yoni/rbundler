@@ -77,7 +77,7 @@ test_bundle <- function(desc, package, expected_dependencies, confirm_dependency
             )
 }
 
-test_path <- file.path(tempdir(), '..', sprintf('bundle-test-%s', as.numeric(Sys.time())))
+test_path <- file.path(tempdir(), sprintf('bundle-test-%s', as.numeric(Sys.time())))
 dir.create(test_path)
 dependency <- mock_dependency(repos=repos)
 mock_packages <- create_mock_packages(test_path, dependency, repos)
