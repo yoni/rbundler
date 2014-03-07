@@ -1,5 +1,5 @@
 # rbundler
-![Travis CI Build](https://api.travis-ci.org/opower/rbundler.png "Travis CI Build")
+[![Travis CI Build](https://api.travis-ci.org/opower/rbundler.png "Travis CI Build")](https://travis-ci.org/opower/rbundler)
 
 rbundler is an R package dependency management utility.
 
