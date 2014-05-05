@@ -1,7 +1,7 @@
 Package: rbundler
 Maintainer: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
 Author: Yoni Ben-Meshulam <yoni.bmesh@gmail.com>
-Version: 0.3.6
+Version: 0.3.7
 License: GPL-3
 Title: Rbundler manages an application's dependencies systematically
     and repeatedly.

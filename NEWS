@@ -1,3 +1,8 @@
+rbundler 0.3.7
+--------------
+* Temporary fix for https://github.com/opower/rbundler/issues/31 by not overriding repos. Conditionally runs tests,
+to avoid issues with CRAN policies.
+
 rbundler 0.3.6
 --------------
 
